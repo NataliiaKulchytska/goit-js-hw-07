@@ -7,33 +7,16 @@ const containerGallery = document.querySelector('.gallery');
 const image = document.querySelector('.gallery__image');
 // console.log(divGallery);
 containerGallery.addEventListener('click', onClickImgModal);
-containerGallery.addEventListener('keydown', onCloseModalKey);
+// containerGallery.addEventListener('keydown', onCloseModalKey);
  
 // image.src = `${preview}`,
 //       image.alt = `${description}`,
 //       image.dataset.source = `${origin}`
 
-// const markupFunEl = markupDataArray;
+const markupFunEl = markupDataArray(galleryItems);
 
-const markupDataArray = galleryItems.map(({ preview, original, description }) => 
-    `<div class = gallery_item>
-         <a class = gallery__link href='${original}'>
-      <img
-      class= 'gallery__image'
-      src= '${preview}'
-      data-source= '${original}'
-      alt='${description}'
-    />
-  </a>
-</div>`)
-        .join('');
-    
-   
-// function markupDataArray() {
-
-
-//   return galleryItems.map(({ preview, original, description }) => {
-//    return `<div class = gallery_item>
+// const markupDataArray = galleryItems.map(({ preview, original, description }) => 
+//     `<div class = gallery_item>
 //          <a class = gallery__link href='${original}'>
 //       <img
 //       class= 'gallery__image'
@@ -42,40 +25,50 @@ const markupDataArray = galleryItems.map(({ preview, original, description }) =>
 //       alt='${description}'
 //     />
 //   </a>
-// </div>`})
+// </div>`)
 //         .join('');
     
    
-// };
+function markupDataArray() {
 
-containerGallery.insertAdjacentHTML('afterbegin', markupDataArray);
-const instance = basicLightbox.create(`${markupDataArray}  width="800" height="600">`); 
+  return galleryItems.map(({ preview, original, description }) => {
+   return `<div class = gallery_item>
+         <a class = gallery__link href='${original}'>
+      <img
+      class= 'gallery__image'
+      src= '${preview}'
+      data-source= '${original}'
+      alt='${description}'
+    />
+  </a>
+</div>`})
+        .join('');
+    
+   
+};
 
-//  `<img src='${preview}'>`
+containerGallery.insertAdjacentHTML('afterbegin', markupFunEl);
+ 
+const instance = basicLightbox.create(`
+    <img src="assets/images/image.png" width="800" height="600">
+`);
+
 function onClickImgModal(e) {
   e.preventDefault();
   
-  const { target } = e;  
-  
-  if (target.localName === 'img') {
-//  image.dataset.source =`${origin}`
-     
+  const { target } = e;   
+  if (target.localName !== 'img') {
+    return;    
     
-    //    modalImgRef.src = e.target.dataset.source;
-    
-    // modalImgRef.alt = e.target.alt;
-    // modalImgRef.dataset.index = e.target.dataset.index;
-    instance.show();
-    
-    // console.log(instance);
   } 
+   instance.show();
 };
 
-function onCloseModalKey(e) {
-  if (e.key === 'Escape') {
-      containerGallery.classList.remove('is-open');
-  }
-};
+// function onCloseModalKey(e) {
+//   if (e.key === 'Escape') {
+//       containerGallery.classList.remove('is-open');
+//   }
+// };
 // {
 //   onShow: (instance) => {},
 // 	/*
