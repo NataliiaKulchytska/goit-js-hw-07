@@ -7,11 +7,9 @@ const containerGallery = document.querySelector('.gallery');
 const image = document.querySelector('.gallery__image');
 // console.log(divGallery);
 containerGallery.addEventListener('click', onClickImgModal);
-// containerGallery.addEventListener('keydown', onCloseModalKey);
+containerGallery.addEventListener('keydown', onCloseModalKey);
  
-// image.src = `${preview}`,
-//       image.alt = `${description}`,
-//       image.dataset.source = `${origin}`
+
 
 const markupFunEl = markupDataArray(galleryItems);
 
@@ -49,31 +47,33 @@ function markupDataArray() {
 
 containerGallery.insertAdjacentHTML('afterbegin', markupFunEl);
  
-const instance = basicLightbox.create(`
-    <img src="assets/images/image.png" width="800" height="600">
-`);
+// const instance = basicLightbox.create(`
+//     <img src="assets/images/image.png" width="800" height="600">
+// `);
 
+ 
 function onClickImgModal(e) {
   e.preventDefault();
-  
-  const { target } = e;   
+
+  const selectedImage = e.target.getAttribute("data-source");
+  const { target } = e;
+
   if (target.localName !== 'img') {
-    return;    
+    return;
+  }
     
-  } 
-   instance.show();
+    const instance = basicLightbox.create(` 
+        <img src=${selectedImage} width="800" height="600">
+    `);
+     instance.show();
+  
 };
 
-// function onCloseModalKey(e) {
-//   if (e.key === 'Escape') {
-//       containerGallery.classList.remove('is-open');
-//   }
-// };
-// {
-//   onShow: (instance) => {},
-// 	/*
-// 	 * Function that gets executed before the lightbox closes.
-// 	 * Returning false will prevent the lightbox from closing.
-// 	 */
-// 	onClose: (instance) => {}
-// }
+function onCloseModalKey(e) {
+  if (e.key === 'Escape') {
+    onShow: (instance) => { };
+    onClose: (instance) => { };  
+  }
+  
+	
+};
